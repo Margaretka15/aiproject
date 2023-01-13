@@ -1,3 +1,4 @@
+library("party")
 # Loading Data
 data = read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/00267/data_banknote_authentication.txt", header=FALSE)
 
@@ -52,25 +53,13 @@ plot(cumsum(propve),
      ylab = "Cumulative Proportion of Variance Explained",
      ylim = c(0, 1), type = "b")
 
-# Find Top n principal component
-# which will atleast cover 90 % variance of dimension
-which(cumsum(propve) >= 0.9)[1]
+# wybieranie n pierwszych komponentów, które "pokryją" ponad dany % wariancji
+n = which(cumsum(propve) >= 0.40)[1]
+n
 
-# Predict mpg using first 4 new Principal Components
+# Predict mpg using first n new Principal Components
 # Add a training set with principal components
-new_data <- data.frame(disp = data$class, my_pca$x[, 1:4])
-
-# Running a Decision tree algporithm
-## Installing and loading packages
-# install.packages("rpart")
-# install.packages("rpart.plot")
-# library(rpart)
-# library(rpart.plot)
-# 
-# rpart.model <- rpart(disp ~ .,
-#                      data = train.data, method = "anova")
-# 
-# rpart.plot(rpart.model)
+new_data <- data.frame(disp = data$class, my_pca$x[, 1:n])
 
 new_data$disp <- factor(new_data$disp, levels = 0:1, labels = c("fake", "real"))
 ratios = list(c(0.6,0.4), c(0.75,0.25),c(0.9,0.1))
@@ -103,4 +92,6 @@ for (ratio in ratios)
 }
 sds
 means
+n
+cf
 
