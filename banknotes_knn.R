@@ -1,4 +1,4 @@
-library(naivebayes)
+library(class)
 data = read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/00267/data_banknote_authentication.txt", header=FALSE)
 
 names(data) <- c('variance ','skewness ','curtosis', 'entropy', 'class' )
